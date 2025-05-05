@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id(message), class: "bg-white p-4 rounded shadow mb-2 flex justify-between items-center" do %>
+  <div class="text-gray-800">
+    <%= message.content %>
+    <%= link_to 'Edit', edit_message_path(message), 
+        data: { turbo_frame: dom_id(message) }, 
+        class: "text-blue-600 hover:underline" %>
+  </div>
+  <div class="space-x-2">
+    <%= button_to 'Delete', message_path(message), method: :delete,
+        class: "text-red-600 hover:underline", form: { class: "inline" } %>
+  </div>
+<% end %>

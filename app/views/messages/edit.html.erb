@@ -1,0 +1,10 @@
+<%= turbo_frame_tag dom_id(@message) do %>
+  <%= form_with(model: @message, data: { turbo_frame: dom_id(@message) }) do |f| %>
+    <div class="mb-2">
+      <%= f.text_field :content, class: "border p-2 w-full", autofocus: true %>
+    </div>
+    <div>
+      <%= f.submit "Update", class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+    </div>
+  <% end %>
+<% end %>
