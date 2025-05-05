@@ -7,7 +7,7 @@ describe "user can edit meessage", type: :feature do
     @message = Message.create!(content: 'test message',room_id:@room.id)
   end
 
-  it "edits room name" do
+  it "edits message" do
     user_goes_room_page
     user_clicks_edit_link
     user_fills_edit_message
