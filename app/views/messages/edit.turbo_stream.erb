@@ -1,0 +1,4 @@
+<%= turbo_stream.replace @message do %>
+    <%= render partial: "form", locals: { message: @message } %>
+  <% end %>
+  

@@ -7,7 +7,7 @@ Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.binary = "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" # หรือ path ที่ถูกต้อง
-  options.add_argument('--headless')
+  #options.add_argument('--headless')
   options.add_argument('--no-sandbox')
   options.add_argument('--disable-dev-shm-usage')
 

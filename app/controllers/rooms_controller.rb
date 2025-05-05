@@ -3,9 +3,12 @@ class RoomsController < ApplicationController
 
   def index
     @rooms = Room.all
+  
     @room = @rooms[0] unless @rooms.empty?
-    @messages = @room ? @room.messages : []
+    @messages = []
+    @messages = @room.messages unless @rooms.empty?
   end
+  
 
   def show
   end

@@ -1,39 +1,39 @@
 require 'rails_helper'
 
-describe "Message management: " do
-  context "when user is in a room" do
-    it "allows user to edit their message", js: true do
-      user_goes_to_room
-      user_creates_message
-      user_edits_message
-      user_should_see_edited_message
+describe "user can edit meessage", type: :feature do
+  context "when a room exists, the user can edit the message" do
+  before :each do
+    @room = Room.create!(name: 'test room')
+    @message = Message.create!(content: 'test message',room_id:@room.id)
+  end
+
+  it "edits room name" do
+    user_goes_room_page
+    user_clicks_edit_link
+    user_fills_edit_message
+    user_should_see_updated_message
+  end
+
+  def user_goes_room_page
+    visit rooms_path
+  end
+
+  def user_clicks_edit_link
+    find("a[data-turbo-frame='message_#{@message.id}']").click
+
+  end
+
+  def user_fills_edit_message
+    within "form[data-turbo-frame='message_#{@message.id}']" do
+      fill_in 'message_content', with: 'edited message'
+      click_button "Update"
     end
+   
   end
-end
 
-def user_goes_to_room
-  visit rooms_path
-  click_link 'DEMO ROOM'
-end
-
-def user_creates_message
-  within '#message-form' do
-    fill_in 'message_content', with: "Hello World"
-    click_button 'Send'
+  def user_should_see_updated_message
+    expect(page).to have_content('edited message')
   end
-end
 
-def user_edits_message
-  within '.message-container' do
-    click_link 'Edit'
   end
-  
-  within "turbo-frame[id^='message_']" do
-    fill_in 'message_content', with: "Updated Message"
-    click_button 'Update'
-  end
-end
-
-def user_should_see_edited_message
-  expect(page).to have_content 'Updated Message'
 end

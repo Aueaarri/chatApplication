@@ -5,7 +5,8 @@
           <%= render message %>
         <% end %>
     </div>
-  <% end %>
-  <%= render partial: 'messages/form', locals: {message: Message.new(room: @room)} %>
+      <%= render partial: 'messages/form', locals: {message: Message.new(room: @room)} %>
     <%= turbo_stream_from @room %>
+  <% end %>
+
 </div>

@@ -1,7 +1,8 @@
-<%= turbo_frame_tag "create-message-form-#{message.room.id}" do %>
+<%= turbo_frame_tag "create-message-form-#{message.room&.id || 'new'}" do %>
   <%= form_with(model: message, id: 'message-form') do |form| %>
     <%= form.text_field :content %>
-    <%= form.hidden_field :room_id, value: message.room.id %>
+    <%= form.hidden_field :room_id, value: message.room&.id %>
+
 
     <div>
       <%= form.submit %>

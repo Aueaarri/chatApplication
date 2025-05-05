@@ -15,8 +15,8 @@ class MessagesController < ApplicationController
 
   # GET /messages/1 or /messages/1.json
   def show
+    @message = Message.find(params[:id])
   end
-
   # GET /messages/new
   def new
     @message = Message.new
@@ -24,8 +24,13 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
-    @message = Message.find(params[:id])
+    respond_to do |format|
+      format.turbo_stream
+      format.html
+    end
   end
+  
+  
 
   # POST /messages or /messages.json
   def create
@@ -38,7 +43,9 @@ class MessagesController < ApplicationController
         format.html { redirect_to @message, notice: "Message was successfully created." }
         format.json { render :show, status: :created, location: @message }
         format.turbo_stream
+        
       else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@message, partial: "message", locals: { message: @message }) }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @message.errors, status: :unprocessable_entity }
       end
@@ -54,6 +61,7 @@ class MessagesController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.replace(@message) }
         format.html { redirect_to @message, notice: "Message was successfully updated." }
         format.json { render :show, status: :ok, location: @message }
+        format.turbo_stream
       else
         format.turbo_stream { render :edit, status: :unprocessable_entity }
         format.html { render :edit, status: :unprocessable_entity }
